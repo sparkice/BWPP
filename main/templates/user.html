@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap-theme.min.css"></script>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <title>个人页面</title>
+</head>
+<body>
+<div class="page-header text-center">
+    <h2>帮我跑跑
+        <small>个人主页</small>
+    </h2>
+    <div class="well">
+        <ul class="list-group">
+               <li class="list-group-item">个人姓名:{{ user.userprofile.username}}</li>
+               <li class="list-group-item">手机号码:{{ user.userprofile.userphone }}</li>
+               <li class="list-group-item">学号:{{ user.userprofile.userID }}</li>
+               <li class="list-group-item">被赞:{{ user.userprofile.star_num }}</li>
+               <li class="list-group-item">委托:{{ user.userprofile.please_num }}</li>
+               <li class="list-group-item">完成:{{ user.userprofile.do_num }}</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
