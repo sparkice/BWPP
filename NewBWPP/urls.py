@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'editaction',main_views.editaction,  name='editaction'),
     url(r'^login/$',login,{'template_name':  'login.html'},  name='login'),
     url(r'^logout/$', logout,{'template_name':  'logout.html'},  name='logout'),
-    url(r'^user/$',main_views.user, name='user')
+    url(r'^user/$',main_views.user, name='user'),
+    url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take')
 ]

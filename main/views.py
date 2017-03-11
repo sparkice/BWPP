@@ -45,3 +45,10 @@ class UserForm(forms.Form):
 def user(request):
     return render(request,'user.html')
 
+@login_required
+def take(request,mail_id):
+    mail = models.Mail.objects.get(pk=mail_id)
+    mail.delete()
+    return HttpResponseRedirect('http://127.0.0.1:8000')
+
+

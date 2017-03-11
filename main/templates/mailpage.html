@@ -31,6 +31,6 @@
 <p class="list-group-item active"><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host }}</p>
 <p class="list-group-item active"><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.date_time }}</p>
 </div>
-<a href="{% url 'editpage' %}" type="button" class="btn btn-primary btn-block btn-lg">点击领取</button> </a>
+<a href="{% url 'take' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">点击领取</button> </a>
 </body>
 </html>
