@@ -119,4 +119,4 @@ LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000'
 
 AUTH_USER_MODEL = 'main.NewUser'
 
-AUTH_PROFILE_MODULE = 'NewUser.UserProfile'
+AUTH_PROFILE_MODULE = 'main.UserProfile'
