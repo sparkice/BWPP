@@ -18,17 +18,31 @@
     <title>Title</title>
 </head>
 <body>
+
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header text-center">
+       <button type="button" class="navbar-toggle" data-toggle="collapse"
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+       <p class="navbar-text"> {{ request.user }}</p>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav">
+         <li ><a href="/user">个人主页</a></li>
+         <li><a href="{% url 'logout' %}">退出</a></li>
+      </ul>
+   </div>
+</nav>
 <div class="page-header text-center">
     <h2>帮我跑跑
         <small>代取快递列表</small>
     </h2>
 </div>
-<div class="text-center">  {% if request.user.is_authenticated %}
-    <p>亲爱的 {{ request.user }} 您已经登录 <a href="http://127.0.0.1:8000/logout/">下线</a></p>
-{% else %}
-    <p>您尚未登录~<a href="http://127.0.0.1:8000/login/">登入</a></p>
-{% endif %}
-</div>
+
 
 
 <div class="well">

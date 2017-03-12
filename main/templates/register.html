@@ -1,59 +1,58 @@
 <!DOCTYPE html>
-<html  lang="zh-cn">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- 可选的Bootstrap主题文件（一般不使用） -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap-theme.min.css"></script>
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap-theme.min.css"></script>
 
-<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <title>帮我跑跑登录</title>
 </head>
 <body>
 
- <script type="text/javascript">
-                        function check(){
-                            var username = document.getElementById('u');
-                            var userID = document.getElementById('i');
-                            var password1 = document.getElementById('p1');
-                            var password2 = document.getElementById('p2');
-                                if(username.value == ''){
-                                alert('手机号不能为空，请重新输入');
-                                username.select();
-                                }
-                                else if(userID.value == ''){
-                                alert('学号不能为空，请重新输入');
-                                userID.select();
-                                }else if(password1.value == ''){
-                                    alert('密码1不能为空，请重新输入');
-                                    password1.select();
-                                }else if(password2.value == ''){
-                                    alert('密码2不能为空，请重新输入');
-                                    password2.select();
-                                }else if(password2.value != password1.value){
-                                    alert('两次密码不一致，请重新输入');
-                                    password1.select();
-                                }else{
-                                    return true;
-                                }
-                                return false;
-                        }
-                    </script>
-
+<script type="text/javascript">
+    function check() {
+        var username = document.getElementById('u');
+        var userID = document.getElementById('i');
+        var password1 = document.getElementById('p1');
+        var password2 = document.getElementById('p2');
+        if (username.value == '') {
+            alert('手机号不能为空，请重新输入');
+            username.select();
+        }
+        else if (userID.value == '') {
+            alert('学号不能为空，请重新输入');
+            userID.select();
+        } else if (password1.value == '') {
+            alert('密码1不能为空，请重新输入');
+            password1.select();
+        } else if (password2.value == '') {
+            alert('密码2不能为空，请重新输入');
+            password2.select();
+        } else if (password2.value != password1.value) {
+            alert('两次密码不一致，请重新输入');
+            password1.select();
+        } else {
+            return true;
+        }
+        return false;
+    }
+</script>
 
 
 <div class="alert alert-warning">
-   <a href="#" class="close" data-dismiss="alert">
-   </a>
-   <strong>注册提醒框</strong>{{ msg }}
+    <a href="#" class="close" data-dismiss="alert">
+    </a>
+    <strong>注册提醒框</strong>{{ msg }}
 </div>
 
 <div class="page-header text-center">
@@ -63,39 +62,39 @@
 </div>
 
 <div class="well text-center">
-<form method="post" action="" class="form-horizontal" role="form">
-    {% csrf_token %}
-    {{ rf.non_field_errors }}
+    <form method="post" action="" class="form-horizontal" role="form">
+        {% csrf_token %}
+        {{ rf.non_field_errors }}
 
-     <div class="form-group">
-    {{ rf.username.errors }}
-    {{ rf.username }}
+        <div class="form-group">
+            {{ rf.username.errors }}
+            {{ rf.username }}
 
-         <input type="text" id="u" name="username" placeholder="手机号码"/>
-   </div>
+            <input type="text" id="u" name="username" placeholder="手机号码"/>
+        </div>
 
-    <div class="form-group">
-    {{ rf.username.errors }}
-    {{ rf.username }}
+        <div class="form-group">
+            {{ rf.username.errors }}
+            {{ rf.username }}
 
-         <input type="text" id="i" name="userID" placeholder="个人学号"/>
-   </div>
+            <input type="text" id="i" name="userID" placeholder="个人学号"/>
+        </div>
 
-    <div class="form-group">
-    {{ rf.password1.errors }}
-    {{ rf.password1 }}
-        <input type="password" id="p1" name="password1" placeholder="密码(不少于6位)"/>
-    </div>
+        <div class="form-group">
+            {{ rf.password1.errors }}
+            {{ rf.password1 }}
+            <input type="password" id="p1" name="password1" placeholder="密码(不少于6位)"/>
+        </div>
 
-    <div class="form-group">
-    {{ rf.password2.errors }}
-    {{ rf.password2 }}
-        <input type="password" id="p2" name="password2" placeholder="再次输入密码"/>
-    </div>
+        <div class="form-group">
+            {{ rf.password2.errors }}
+            {{ rf.password2 }}
+            <input type="password" id="p2" name="password2" placeholder="再次输入密码"/>
+        </div>
 
-    <input class="btn" type="submit" value="注 册" onclick="return check()"/>
+        <input class="btn" type="submit" value="注 册" onclick="return check()"/>
 
-</form>
+    </form>
 </div>
 </body>
 </html>

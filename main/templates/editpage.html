@@ -19,32 +19,32 @@
 </head>
 <body>
 <div class="well">
-<form action="{% url 'editaction' %}" method="post">
-    {% csrf_token %}
-    <div class="input-group">
+    <form action="{% url 'editaction' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group">
 
-        <span class="input-group-addon">取快递地点</span>
-        <input type='text' name="NewWhereUP" class="form-control">
-    </div>
+            <span class="input-group-addon">取快递地点</span>
+            <input type='text' name="NewWhereUP" class="form-control">
+        </div>
 
 
-    <div class="input-group">
-        <span class="input-group-addon">收快递地点 </span>
-        <input type='text' name="NewWhereDown" class="form-control">
-    </div>
+        <div class="input-group">
+            <span class="input-group-addon">收快递地点 </span>
+            <input type='text' name="NewWhereDown" class="form-control">
+        </div>
 
-    <div class="input-group">
-        <span class="input-group-addon">收件人电话</span>
-        <input type='text' name="NewWherePhone" class="form-control">
-    </div>
+        <div class="input-group">
+            <span class="input-group-addon">收件人电话</span>
+            <input type='text' name="NewWherePhone" class="form-control">
+        </div>
 
-    <div class="input-group">
-        <span class="input-group-addon">收件人姓名</span>
-        <input type='text' name="NewWhereHost" class="form-control">
-    </div>
-    <input type="submit" value="提交">
+        <div class="input-group">
+            <span class="input-group-addon">收件人姓名</span>
+            <input type='text' name="NewWhereHost" class="form-control">
+        </div>
+        <input type="submit" value="提交">
 
-</form>
+    </form>
 </div>
 </body>
 </html>

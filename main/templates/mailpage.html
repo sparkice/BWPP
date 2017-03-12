@@ -25,11 +25,11 @@
 </div>
 
 <div class="well">
-<p class="list-group-item active"><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
-<p class="list-group-item active"><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
-<p class="list-group-item active"><span class="glyphicon glyphicon-phone"></span> 收件人手机号码 {{ mail.Phone }}</p>
-<p class="list-group-item active"><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host }}</p>
-<p class="list-group-item active"><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.date_time }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-phone"></span> 收件人手机号码 {{ mail.Phone }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.date_time }}</p>
 </div>
 <a href="{% url 'take' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">点击领取</button> </a>
 </body>

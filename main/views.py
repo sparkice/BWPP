@@ -1,12 +1,12 @@
 from django import forms
-from django.shortcuts import render, render_to_response,redirect
+from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from . import models
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
-from .forms import LoginForm,RegisterForm,RePassForm
+from django.contrib.auth import authenticate, login, logout
+from .forms import LoginForm, RegisterForm, RePassForm
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -26,10 +26,10 @@ def register(request):
         else:
             if rf.is_valid():
                 username = rf.cleaned_data['username']
-               # userID = rf.cleaned_data['userID']
+                # userID = rf.cleaned_data['userID']
                 filter_result1 = models.NewUser.objects.filter(username=username)
-               # filter_result2 = models.NewUser.objects.filter(userID=userID)
-                if len(filter_result1) > 0:              # 用户名(手机号码）或 学号 重名
+                # filter_result2 = models.NewUser.objects.filter(userID=userID)
+                if len(filter_result1) > 0:  # 用户名(手机号码）或 学号 重名
                     return render(request, 'register.html', {'form': rf, 'msg': "该手机号或学号已存在！"})
                 else:
                     username = rf.cleaned_data['username']
@@ -43,22 +43,24 @@ def register(request):
                     user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
                     user.save()
                     u = models.UserProfile.objects.create(user=user, username=username,
-                                                   userID=userID,password=password1,userphone = username) # 注册成功则创建对应user profile
+                                                          userID=userID, password=password1,
+                                                          userphone=username)  # 注册成功则创建对应user profile
                     u.save()
                     return redirect('/login', {'form': rf, 's': "注册成功！请登录！"})
             else:
                 return render(request, 'register.html', {'form': rf, 'msg': "等待正确输入！"})
 
 
-
 @login_required
 def index(request):
-    allmails = models.Mail.objects.all()  # 在主页面中显示的快递
+    all_mails = models.Mail.objects.all()  # 在主页面中显示的快递
     mail = []
-    for x in allmails:
-        if x.situation == 0:    # 只显示没有被取的快递
+    for x in all_mails:
+        if x.Situation == 0:  # 只显示没有被取的快递
             mail.append(x)
+
     return render(request, 'index.html', {'mails': mail})  # 返回字典
+
 
 @login_required
 def mailpage(request, mail_id):
@@ -70,9 +72,11 @@ def mailpage(request, mail_id):
         mail.date_time = '选择领取后可见'
     return render(request, 'mailpage.html', {'mail': mail})
 
+
 @login_required
 def editpage(request):
     return render(request, 'editpage.html')
+
 
 @login_required
 def editaction(request):
@@ -92,13 +96,12 @@ class UserForm(forms.Form):
 
 @login_required
 def user(request):
-    return render(request,'user.html')
+    return render(request, 'user.html')
+
 
 @login_required
-def take(request,mail_id):
+def take(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     if mail.situation == 0:
         models.Mail.objects.get(pk=mail_id).situation = 1
     return HttpResponseRedirect('/')
-
-
