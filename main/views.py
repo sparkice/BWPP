@@ -1,13 +1,10 @@
-from django import forms
-from django.shortcuts import render, render_to_response, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-from . import models
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, RegisterForm, RePassForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+
+from . import models
+from .forms import RegisterForm, MailForm
 
 
 def register(request):
@@ -26,7 +23,7 @@ def register(request):
         else:
             if rf.is_valid():
                 username = rf.cleaned_data['username']
-                # userID = rf.cleaned_data['userID']
+                # userID = rf.cleaned_data['userID']    #尝试测试学号
                 filter_result1 = models.NewUser.objects.filter(username=username)
                 # filter_result2 = models.NewUser.objects.filter(userID=userID)
                 if len(filter_result1) > 0:  # 用户名(手机号码）或 学号 重名
@@ -65,33 +62,33 @@ def index(request):
 @login_required
 def mailpage(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
-    if mail.situation < 1:
-        mail.Host = '选择领取后可见'
+    if mail.Situation < 1:
+        mail.Host_user = None
+        mail.Push_time = '选择领取后可见'
         mail.Phone = '选择领取后可见'
-        mail.Host = '选择领取后可见'
-        mail.date_time = '选择领取后可见'
     return render(request, 'mailpage.html', {'mail': mail})
 
-
 @login_required
-def editpage(request):
-    return render(request, 'editpage.html')
+def Mail(request):
+    if request.method == 'POST':
+        qf = MailForm(request.POST)
+        if qf.is_valid():
+            user = request.user
+            whereup = qf.cleaned_data['whereup']
+            wheredown = qf.cleaned_data['wheredown']
+            models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user)
 
+            u = models.UserProfile.objects.get(user=user)
+            u.please_num += 1
 
-@login_required
-def editaction(request):
-    NewWhereUP = request.POST.get('NewWhereUP', 'NEWWHEREUP')
-    NewWhereDown = request.POST.get('NewWhereDown', 'NEWWHEREDOWN')
-    NewWherePhone = request.POST.get('NewWherePhone', 'NEWPHONE')
-    NeWWhereHost = request.POST.get('NewWhereHost', 'NEWHOST')
-    models.Mail.objects.create(WhereUP=NewWhereUP, WhereDown=NewWhereDown, Phone=NewWherePhone, Host=NeWWhereHost)
-    mails = models.Mail.objects.all()
-    # return render(request,'index.html',{'mails': mails})
-    return HttpResponseRedirect('http://127.0.0.1:8000')
-
-
-class UserForm(forms.Form):
-    username = forms.CharField()
+            # 请求快递数目+1
+            u.save()
+            return HttpResponseRedirect('/')
+        else:
+            p = '快递所在地与到件地都不能为空'
+            return render(request, 'new.html', {'form': qf, 'msg': p})
+    else:
+        return render(request, 'new.html')
 
 
 @login_required
@@ -101,7 +98,10 @@ def user(request):
 
 @login_required
 def take(request, mail_id):
+    user = request.user     #从当前请求中得到用户名
     mail = models.Mail.objects.get(pk=mail_id)
-    if mail.situation == 0:
-        models.Mail.objects.get(pk=mail_id).situation = 1
+    if mail.Situation < 1:
+        mail.Situation = 1
+        mail.Take_user = user       #这里存在一个问题是如果先前有一个物品已经有了Take_user 则会产生错误！
+        mail.save()
     return HttpResponseRedirect('/')

@@ -32,11 +32,10 @@ class Mail(models.Model):
     WhereUP = models.CharField(max_length=10)  # 存储快递网点信息
     WhereDown = models.CharField(max_length=10)  # 存储快递接受地点
     Push_time = models.DateTimeField(auto_now_add=True)  # 存储发送时间
-    Take_time = models.DateTimeField(auto_now_add=False)  # 拿取快递时间
-    Receive_time = models.DateTimeField(auto_now_add=False)  # 收到快递时间
-
+    Take_time = models.DateTimeField(auto_now_add=False, null=True)  # 拿取快递时间
+    Receive_time = models.DateTimeField(auto_now_add=False, null=True)  # 收到快递时间
     Host_user = models.ForeignKey('NewUser', blank=True)  # 快递所有者信息
-    Take_user = models.OneToOneField('NewUser', blank=True, related_name='+')  # 送快递人的信息
+    Take_user = models.ForeignKey('NewUser', blank=True, related_name='+',  null=True)  # 送快递人的信息
     Situation = models.IntegerField(default=0)  # 当前快递状态 0 表示没有人接收 1 表示有人接收还没有送到 2表示已经送到
 
     class Meta:

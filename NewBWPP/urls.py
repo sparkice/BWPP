@@ -19,13 +19,12 @@ from main import views as main_views
 from django.contrib.auth.views import login,logout
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$',  main_views.index),
-    url(r'^mailpage/(?P<mail_id>[0-9]+)$', main_views.mailpage,  name='mailpage'),
-    url(r'^edit/$', main_views.editpage,  name='editpage'),
-    url(r'editaction',main_views.editaction,  name='editaction'),
+    url(r'^$',  main_views.index,  name='index'),
+    url(r'^mail/(?P<mail_id>[0-9]+)$', main_views.mailpage,  name='mail_page'),
+    url(r'^new/$',main_views.Mail,name='new_mail'),
     url(r'^login/$',login,{'template_name':  'login.html'},  name='login'),
     url(r'^register/$',main_views.register,name='register'),
-    url(r'^logout/$', logout,{'template_name':  'logout.html'},  name='logout'),
+    url(r'^logout/$', logout,{'next_page': '/login'},  name='logout'),
     url(r'^user/$',main_views.user, name='user'),
     url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take')
 ]

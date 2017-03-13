@@ -25,7 +25,27 @@ class RegisterForm(forms.Form):
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
 
+
+class MailForm(forms.Form):
+    whereup = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class':'mail_whereup',
+                'id':'mail_whereup'
+            }
+        )
+    )
+
+    wheredown = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'mail_wheredown',
+                'id': 'mail_wheredown'
+            }
+        )
+    )
+
+
 class RePassForm(forms.Form):
     old_pd = forms.CharField(widget=forms.PasswordInput)
-
     new_pd = forms.CharField(widget=forms.PasswordInput)

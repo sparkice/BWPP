@@ -18,6 +18,26 @@
     <title>详细信息</title>
 </head>
 <body>
+
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header text-center">
+       <button type="button" class="navbar-toggle" data-toggle="collapse"
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+       <p class="navbar-text " > <span class="glyphicon glyphicon-user"></span><strong>{{ request.user }}</strong></p>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav">
+         <li ><a href="/user">个人主页</a></li>
+         <li><a href="{% url 'logout' %}">退出</a></li>
+      </ul>
+   </div>
+</nav>
+
 <div class="page-header text-center">
     <h2>帮我跑跑
         <small>当前快递详细信息</small>
@@ -28,9 +48,10 @@
     <p class="list-group-item active"><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
     <p class="list-group-item active"><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
     <p class="list-group-item active"><span class="glyphicon glyphicon-phone"></span> 收件人手机号码 {{ mail.Phone }}</p>
-    <p class="list-group-item active"><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host }}</p>
-    <p class="list-group-item active"><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.date_time }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host_user }}</p>
+    <p class="list-group-item active"><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.Push_time }}</p>
 </div>
+
 <a href="{% url 'take' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">点击领取</button> </a>
 </body>
 </html>
