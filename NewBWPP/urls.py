@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^register/$',main_views.register,name='register'),
     url(r'^logout/$', logout,{'next_page': '/login'},  name='logout'),
     url(r'^user/$',main_views.user, name='user'),
-    url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take')
+    url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take'),
+    url(r'^get/(?P<mail_id>[0-9]+)$',main_views.get, name='get')
 ]

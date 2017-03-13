@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html  lang="zh-cn">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-<link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- 可选的Bootstrap主题文件（一般不使用） -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap-theme.min.css"></script>
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
     <title>帮我跑跑登录</title>
 </head>
 {% if form.errors %}
-   <div class="alert alert-warning">
-   <a href="#" class="close" data-dismiss="alert">
-      &times;
-   </a>
-   <strong>警告！</strong>您输入的用户名或密码有误，请与管理员联系。
-</div>
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">
+            &times;
+        </a>
+        <strong>警告！</strong>您输入的用户名或密码有误，请与管理员联系。
+    </div>
 {% endif %}
 <div class="page-header text-center">
     <h1>帮我跑跑
@@ -31,21 +33,24 @@
     </h1>
 </div>
 <div class="well text-center">
-<form method="post" action="{% url 'login' %}" class="form-horizontal" role="form">
-    {% csrf_token %}
-     <div class="form-group">
-      <label for="firstname" class="col-sm-2 control-label">名字</label>
-    {{ form.username.lable_tag }}
-    {{ form.username }}
-   </div>
-    <div class="form-group">
-   <label for="firstname" class="col-sm-2 control-label">密码</label>
-    {{ form.password.lable_tag }}
-    {{ form.password }}
-    </div>
+    <form method="post" action="{% url 'login' %}" class="form-horizontal" role="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label text-left">手机号码</label>
+            {{ form.username.lable_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label text-left">密码&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            {{ form.password.lable_tag }}
+            {{ form.password }}
+        </div>
 
-    <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+        <div class="btn-group-lg center">
+        <button type="submit" class="btn btn-primary btn-block">登录</button>
+        <a href="{% url 'register' %}" type="button" class="btn btn-default btn-block">注册</a>
+        <input type="hidden" name="next" value="{{ next }}">
+        </div>
+    </form>
 </div>
 </html>
