@@ -31,6 +31,7 @@ class Mail(models.Model):
     """Imformation about kuai di"""
     WhereUP = models.CharField(max_length=10)  # 存储快递网点信息
     WhereDown = models.CharField(max_length=10)  # 存储快递接受地点
+    Detail = models.CharField(max_length=100,null=True)   #更多细节填充,可以为空
     Push_time = models.DateTimeField(auto_now_add=True)  # 存储发送时间
     Take_time = models.DateTimeField(auto_now_add=False, null=True)  # 拿取快递时间
     Receive_time = models.DateTimeField(auto_now_add=False, null=True)  # 收到快递时间

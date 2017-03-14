@@ -45,6 +45,15 @@ class MailForm(forms.Form):
         )
     )
 
+    detail = forms.CharField(
+        required=False,widget=forms.TextInput(
+            attrs={
+                'class': 'mail_detail',
+                'id': 'mail_detail',
+	            'height' : 20,
+            }
+        )
+    )
 
 class RePassForm(forms.Form):
     old_pd = forms.CharField(widget=forms.PasswordInput)

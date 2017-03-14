@@ -74,11 +74,10 @@ def Mail(request):
 			user = request.user
 			whereup = qf.cleaned_data['whereup']
 			wheredown = qf.cleaned_data['wheredown']
-			models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user)
-
+			detail = qf.cleaned_data['detail']
+			models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user,Detail = detail)
 			u = models.UserProfile.objects.get(user=user)
 			u.please_num += 1
-
 			# 请求快递数目+1
 			u.save()
 			return HttpResponseRedirect('/')
@@ -95,10 +94,15 @@ def user(request):
 	all_mails = models.Mail.objects.all()
 	please_mail = []
 	take_mail = []
+	do_mail = []
 	for x in all_mails:
-		if x.Host_user == user:
+		if x.Host_user == user and x.Situation == 1:
+			do_mail.append(x)
+		elif x.Host_user == user and x.Situation == 2:
 			please_mail.append(x)
-		elif x.Take_user == user:
+		elif x.Take_user == user and x.Situation == 1:
+			do_mail.append(x)
+		elif x.Take_user == user and x.Situation == 2:
 			take_mail.append(x)
 	return render(request, 'user.html',{'please_mails':please_mail},{'take_mails':take_mail} )
 

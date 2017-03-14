@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['123.206.231.168','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -99,7 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-
+GRAPPELLI_ADMIN_TITLE = '帮我跑跑后台管理'
 LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'

@@ -4,7 +4,6 @@ from .models import Mail, NewUser, UserProfile
 
 # Register your models here.
 
-
 class MailAdmin(admin.ModelAdmin):
     list_display = ('id', 'Host_user', 'Take_user','WhereUP', 'WhereDown', 'Situation', 'Push_time', 'Take_time', 'Receive_time')
 

@@ -52,19 +52,27 @@
         {% csrf_token %}
         {{ qf.non_field_errors }}
 
-        <div class="form-group">
+        <div class="input-group">
             {{ qf.whereup.errors }}
             {{ qf.whereup }}
-
-            <input type="text" id="u" name="whereup" placeholder="取件地"/>
+            <span class="input-group-addon">取件地</span>
+            <input type="text" id="u"  class="form-control" name="whereup" placeholder="取件地"/>
         </div>
 
-        <div class="form-group">
+        <br>
+        <div class="input-group">
             {{ qf.wheredown.errors }}
             {{ qf.wheredown }}
-            <input type="text" id="i" name="wheredown" placeholder="收件地"/>
+            <span class="input-group-addon">收件地</span>
+            <input type="text" id="i"  class="form-control" name="wheredown" placeholder="收件地"/>
         </div>
+        <br>
 
+            {{ qf.detail.error }}
+            {{ qf.detail }}
+             <span class="input-group-addon">更多信息</span>
+             <textarea rows="5" id="d" name="detail"  class="form-control" placeholder="更多细节-当所在快递含特殊信息时填写,可以直接复制粘贴"></textarea>
+        <br>
         <button type="submit" class="btn btn-primary btn-block">提交</button>
     </form>
 
