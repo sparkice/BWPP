@@ -44,17 +44,28 @@
     </h2>
 </div>
 <div class="well">
-    <ul class="list-group">
-        <li class="list-group-item active">详细信息</li>
-        <li class="list-group-item">登录名:{{ user.userprofile.username }}</li>
-        <li class="list-group-item">手机号码:{{ user.userprofile.userphone }}</li>
-        <li class="list-group-item">学号:{{ user.userprofile.userID }}</li>
-        <li class="list-group-item">被赞:{{ user.userprofile.star_num }}</li>
-        <li class="list-group-item">委托:{{ user.userprofile.please_num }}</li>
-        <li class="list-group-item">完成:{{ user.userprofile.do_num }}</li>
-    </ul>
-    <div class="panel panel-default">
-        <div class="panel-body">
+
+<ul id="myTab" class="nav nav-tabs">
+   <li class="active"><a href="#more_info" data-toggle="tab">
+      更多信息</a>
+   </li>
+    <li><a href="#please_mail" data-toggle="tab">发布快递</a></li>
+    <li><a href="#take_mail" data-toggle="tab">完成递送</a></li>
+    <li><a href="#take_mail" data-toggle="tab">正在进行</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade" id="more_info">
+        <ul class="list-group">
+            <li class="list-group-item">登录名:{{ user.userprofile.username }}</li>
+            <li class="list-group-item">手机号码:{{ user.userprofile.userphone }}</li>
+            <li class="list-group-item">学号:{{ user.userprofile.userID }}</li>
+            <li class="list-group-item">被赞:{{ user.userprofile.star_num }}</li>
+            <li class="list-group-item">委托:{{ user.userprofile.please_num }}</li>
+            <li class="list-group-item">完成:{{ user.userprofile.do_num }}</li>
+        </ul>
+    </div>
+
+     <div class="tab-pane fade" id="please_mail">
     <ul class="list-group">
         {% for mail in please_mails %}
             <a href="{% url 'mail_page' mail.id %}" class="list-group-item">{{ mail.WhereUP }}
@@ -62,6 +73,8 @@
             </a>
         {% endfor %}
     </ul>
+     </div>
+    <div class="tab-pane fade" id="take_mail">
     <ul class="list-group">
         {% for mail in take_mails %}
             <a href="{% url 'mail_page' mail.id %}" class="list-group-item">{{ mail.WhereUP }}
@@ -69,10 +82,15 @@
             </a>
         {% endfor %}
     </ul>
-        </div>
     </div>
 </div>
-
+<script>
+   $(function () {
+      $('#myTab li:eq(1) a').tab('show');
+   });
+</script>
 </div>
+
+
 </body>
 </html>

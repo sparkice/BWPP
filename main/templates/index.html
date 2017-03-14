@@ -34,10 +34,10 @@
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a herf ="#">学号{{ user.userprofile.userID }} <span class="label label-default">普通</span> </a>
+            <li><a herf ="#">学号{{ user.userprofile.userID }} <span class="label label-primary">普通</span> </a>
 </li>
               <li role="separator" class="divider"></li>
-            <li><a href="/user">个人主页</a></li>
+            <li><a href="/user">个人主页 <span class="badge">3</span> </a></li>
             <li><a href="{% url 'logout' %}">退出</a></li>
         </ul>
     </div>
@@ -47,12 +47,13 @@
         <small>代取快递列表</small>
     </h2>
 </div>
+<div class="text-center">
+    <p class="text-primary"><span class="glyphicon glyphicon-map-marker"> </span>取件地&nbsp;&nbsp;<span class="glyphicon glyphicon-send"></span>送达地</p>
+</div>
 
-
-<div class="well">
+<div class="well text-center">
     {% for mail in mails %}
-        <a href="{% url 'mail_page' mail.id %}" class="list-group-item">{{ mail.WhereUP }}<span
-                class="glyphicon glyphicon-arrow-right"></span>{{ mail.WhereDown }}
+        <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>{{ mail.WhereUP }}&nbsp;&nbsp;<span class="glyphicon glyphicon-send"></span>{{ mail.WhereDown }}
         </a>
     {% endfor %}
 </div>
