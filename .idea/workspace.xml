@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef2066ae-90ca-49d6-bb5b-a70fba946909" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0002_auto_20170312_1455.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0003_auto_20170312_1457.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0004_auto_20170312_1459.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0005_auto_20170312_1502.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0006_auto_20170312_1503.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main/migrations/0007_auto_20170313_0907.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NewBWPP/urls.py" afterPath="$PROJECT_DIR$/NewBWPP/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/admin.py" afterPath="$PROJECT_DIR$/main/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/models.py" afterPath="$PROJECT_DIR$/main/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/templates/index.html" afterPath="$PROJECT_DIR$/main/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/templates/mailpage.html" afterPath="$PROJECT_DIR$/main/templates/mailpage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/templates/new.html" afterPath="$PROJECT_DIR$/main/templates/new.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/templates/register.html" afterPath="$PROJECT_DIR$/main/templates/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/templates/user.html" afterPath="$PROJECT_DIR$/main/templates/user.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/views.py" afterPath="$PROJECT_DIR$/main/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -145,8 +128,8 @@
       <file leaf-file-name="mailpage.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main/templates/mailpage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="63" column="107" lean-forward="false" selection-start-line="63" selection-start-column="107" selection-end-line="63" selection-end-column="107" />
+            <state relative-caret-position="774">
+              <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -640,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489479977487</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="change many!">
+      <created>1489562857926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1489562857926</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -686,7 +676,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add more" />
     <MESSAGE value="change admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="change admin" />
+    <MESSAGE value="change many!" />
+    <option name="LAST_COMMIT_MESSAGE" value="change many!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -951,8 +942,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/templates/mailpage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="63" column="107" lean-forward="false" selection-start-line="63" selection-start-column="107" selection-end-line="63" selection-end-column="107" />
+        <state relative-caret-position="774">
+          <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
           <folding />
         </state>
       </provider>
