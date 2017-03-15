@@ -30,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <p class="navbar-text "><span class="glyphicon glyphicon-user"></span><strong>{{ request.user }}</strong></p>
+        <a class="navbar-brand">{{ request.user }}</a>
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
         <ul class="nav navbar-nav">
@@ -56,7 +56,7 @@
             {{ qf.whereup.errors }}
             {{ qf.whereup }}
             <span class="input-group-addon">取件地</span>
-            <input type="text" id="u"  class="form-control" name="whereup" placeholder="取件地"/>
+            <input type="text" id="u"  class="form-control" name="whereup" placeholder="请准确填写"/>
         </div>
 
         <br>
@@ -64,14 +64,14 @@
             {{ qf.wheredown.errors }}
             {{ qf.wheredown }}
             <span class="input-group-addon">收件地</span>
-            <input type="text" id="i"  class="form-control" name="wheredown" placeholder="收件地"/>
+            <input type="text" id="i"  class="form-control" name="wheredown" placeholder="请准确填写"/>
         </div>
         <br>
 
             {{ qf.detail.error }}
             {{ qf.detail }}
              <span class="input-group-addon">更多信息</span>
-             <textarea rows="5" id="d" name="detail"  class="form-control" placeholder="更多细节-当所在快递含特殊信息时填写,可以直接复制粘贴"></textarea>
+             <textarea rows="5" id="d" name="detail"  class="form-control" placeholder="当所在快递含特殊信息时填写,可以直接复制粘贴"></textarea>
         <br>
         <button type="submit" class="btn btn-primary btn-block">提交</button>
     </form>

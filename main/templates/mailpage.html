@@ -30,13 +30,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <p class="navbar-text "><span class="glyphicon glyphicon-user"></span><strong>{{ request.user }}</strong></p>
+       <a class="navbar-brand">{{ request.user }}</a>
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
         <ul class="nav navbar-nav">
+
             <li><a herf ="#">学号{{ user.userprofile.userID }} <span class="label label-default">普通</span> </a>
 </li>
             <li><a href="/user">个人主页</a></li>
+             <li><a href="{% url 'index' %}">返回主页</button> </a></li>
             <li><a href="{% url 'logout' %}">退出</a></li>
         </ul>
     </div>
@@ -54,26 +56,42 @@
                     aria-hidden="true">
                 &times;
             </button>
-            请不要泄露本页信息给他人。
+            你已经成功领取快递，请不要泄露本页信息给他人<span class="glyphicon glyphicon-eye-open"></span>
+        <br>
         </div>
         <p class="list-group-item "><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
         <p class="list-group-item "><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
-        <p class="list-group-item "><span class="glyphicon glyphicon-phone"></span> 收件人手机号码 {{ mail.Phone }}</p>
-        <p class="list-group-item "><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host_user }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-phone"></span> 收件人姓名 {{ mail.Host_user }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-user"></span> 收件人手机号码 {{ mail.Host_user }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-warning-sign"></span> 快递其他信息 {{ mail.Detail }}</p>
         <p class="list-group-item "><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.Push_time }}</p>
     {% elif mail.Situation == 1 and mail.Host_user == request.user %}
         <p class="list-group-item "><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
         <p class="list-group-item "><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
-        <p class="list-group-item "><span class="glyphicon glyphicon-phone"></span> 收件人手机号码 {{ mail.Phone }}</p>
-        <p class="list-group-item "><span class="glyphicon glyphicon-user"></span> 收件人姓名 {{ mail.Host_user }}</p>
-        <p class="list-group-item "><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.Push_time }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-warning-sign"></span> 快递其他信息 {{ mail.Detail }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-time"></span> 发送时间 {{ mail.Take_time }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-screenshot"></span> 你的快递员 {{ mail.Take_user }}</p>
         <a href="{% url 'get' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">我已收到</button> </a>
-    {% elif mail.Situation == 0 %}
+    {% elif mail.Situation == 0 and mail.Host_user != request.user%}
+        <div class="alert alert-info">点击领取即表示你同意本网站所有条款<br>我们会依法追究丢包，私自藏包等问题</div>
         <p class="list-group-item "><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
         <p class="list-group-item "><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
         <a href="{% url 'take' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">点击领取</button> </a>
-    {% else %}
-        <p> 欢迎来到神秘的呼伦贝尔大草原！！！</p>
+    {% elif mail.Situation == 0 and mail.Host_user == request.user%}
+        <div class="alert alert-warning">你已成功发布快递，取消将会扣除友善度
+            <br>你当前信誉分数为{{ user.userprofile.kind_num}}</div>
+        <p class="list-group-item "><span class="glyphicon glyphicon-map-marker"></span> 取快递地点 {{ mail.WhereUP }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-send"></span> 收快递地点 {{ mail.WhereDown }}</p>
+        <p class="list-group-item "><span class="glyphicon glyphicon-send"></span> 快递其他信息 {{ mail.Detail }}</p>
+        <br>
+        <a href="{% url 'quxiao' mail.id %}" type="button" class="btn btn-primary btn-block btn-lg">点击取消</button> </a>
+    {% elif mail.Situation == 2 and mail.Host_user == request.user%}
+        <div class="alert alert-success">已经完成！你的快递被志愿者领取，并且你也确定收到后才会出现的页面
+        更多信息等待被完善</div>
+     {% elif mail.Situation == 2 and mail.Take_user == request.user%}
+         <div class="alert alert-success">已经完成！你帮助同学完成了一次快递！并且他也确认收到后才会看到的页面
+        更多信息等待被完善
+         </div>
     {% endif %}
 </div>
 </body>

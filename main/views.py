@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils import timezone
-
+from base64 import b64encode
 from . import models
 from .forms import RegisterForm, MailForm
 
@@ -40,8 +40,9 @@ def register(request):
 					user = models.NewUser(username=username, password=password1)
 					user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
 					user.save()
+					new_password = password1.encode('ascii')
 					u = models.UserProfile.objects.create(user=user, username=username,
-					                                      userID=userID, password=password1,
+					                                      userID=userID, password=new_password,
 					                                      userphone=username)  # 注册成功则创建对应user profile
 					u.save()
 					return redirect('/login', {'form': rf, 's': "注册成功！请登录！"})
@@ -75,7 +76,7 @@ def Mail(request):
 			whereup = qf.cleaned_data['whereup']
 			wheredown = qf.cleaned_data['wheredown']
 			detail = qf.cleaned_data['detail']
-			models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user,Detail = detail)
+			models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user,Detail=detail)
 			u = models.UserProfile.objects.get(user=user)
 			u.please_num += 1
 			# 请求快递数目+1
@@ -92,19 +93,11 @@ def Mail(request):
 def user(request):
 	user = request.user
 	all_mails = models.Mail.objects.all()
-	please_mail = []
-	take_mail = []
-	do_mail = []
+	mails = []
 	for x in all_mails:
-		if x.Host_user == user and x.Situation == 1:
-			do_mail.append(x)
-		elif x.Host_user == user and x.Situation == 2:
-			please_mail.append(x)
-		elif x.Take_user == user and x.Situation == 1:
-			do_mail.append(x)
-		elif x.Take_user == user and x.Situation == 2:
-			take_mail.append(x)
-	return render(request, 'user.html',{'please_mails':please_mail},{'take_mails':take_mail} )
+		if x.Take_user == user or x.Host_user == user:
+			mails.append(x)
+	return render(request, 'user.html',{'mails':mails})
 
 
 @login_required
@@ -129,4 +122,14 @@ def get(request, mail_id):
 	u.save()
 	mail.Receive_time = timezone.now()
 	mail.save()
+	return HttpResponseRedirect('/user/')
+
+@login_required
+def quxiao(request,mail_id):
+	models.Mail.objects.get(pk = mail_id).delete()
+	user = request.user
+	u = models.UserProfile.objects.get(user=user)
+	u.please_num -= 1
+	u.kind_num -= 5     # 信誉度扣除5分
+	u.save()
 	return HttpResponseRedirect('/user/')

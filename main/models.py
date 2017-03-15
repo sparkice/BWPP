@@ -9,7 +9,9 @@ class NewUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
+    class Meta:
+        verbose_name = '个人关键'
+        verbose_name_plural = '个人关键'
 
 class UserProfile(models.Model):
     """This function Links UserProfile to a User model instance."""
@@ -26,6 +28,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    class Meta:
+        verbose_name = '个人详情'
+        verbose_name_plural = '个人详情'
 
 class Mail(models.Model):
     """Imformation about kuai di"""
@@ -40,6 +45,8 @@ class Mail(models.Model):
     Situation = models.IntegerField(default=0)  # 当前快递状态 0 表示没有人接收 1 表示有人接收还没有送到 2表示已经送到
 
     class Meta:
+        verbose_name = '快递'
+        verbose_name_plural = '快递'
         ordering = ['-Push_time']  # 按时间下降排序
 
 

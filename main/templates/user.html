@@ -29,7 +29,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <p class="navbar-text text-center"><strong> {{ request.user }} </strong></p>
+        <a class="navbar-brand">{{ request.user }}</a>
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
         <ul class="nav navbar-nav">
@@ -45,51 +45,91 @@
 </div>
 <div class="well">
 
-<ul id="myTab" class="nav nav-tabs">
-   <li class="active"><a href="#more_info" data-toggle="tab">
-      更多信息</a>
-   </li>
-    <li><a href="#please_mail" data-toggle="tab">发布快递</a></li>
-    <li><a href="#take_mail" data-toggle="tab">完成递送</a></li>
-    <li><a href="#take_mail" data-toggle="tab">正在进行</a></li>
-</ul>
-<div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade" id="more_info">
-        <ul class="list-group">
-            <li class="list-group-item">登录名:{{ user.userprofile.username }}</li>
-            <li class="list-group-item">手机号码:{{ user.userprofile.userphone }}</li>
-            <li class="list-group-item">学号:{{ user.userprofile.userID }}</li>
-            <li class="list-group-item">被赞:{{ user.userprofile.star_num }}</li>
-            <li class="list-group-item">委托:{{ user.userprofile.please_num }}</li>
-            <li class="list-group-item">完成:{{ user.userprofile.do_num }}</li>
-        </ul>
-    </div>
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active"><a href="#more_info" data-toggle="tab">
+            更多信息</a>
+        </li>
+        <li><a href="#please_mail" data-toggle="tab">拿到</a></li>
+        <li><a href="#take_mail" data-toggle="tab">帮跑</a></li>
+        <li><a href="#do_mail" data-toggle="tab">进行中的任务</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade" id="more_info">
+            <ul class="list-group">
+                <li class="list-group-item">登录名:{{ user.userprofile.username }}</li>
+                <li class="list-group-item">手机号码:{{ user.userprofile.userphone }}</li>
+                <li class="list-group-item">学号:{{ user.userprofile.userID }}<span class="label label-primary">已认证</span></li>
+                <li class="list-group-item">被赞:{{ user.userprofile.star_num }}</li>
+                <li class="list-group-item">委托:{{ user.userprofile.please_num }}</li>
+                <li class="list-group-item">完成:{{ user.userprofile.do_num }}</li>
+            </ul>
+        </div>
 
-     <div class="tab-pane fade" id="please_mail">
-    <ul class="list-group">
-        {% for mail in please_mails %}
-            <a href="{% url 'mail_page' mail.id %}" class="list-group-item">{{ mail.WhereUP }}
-                <span class="glyphicon glyphicon-arrow-right"></span>{{ mail.WhereDown }}
-            </a>
-        {% endfor %}
-    </ul>
-     </div>
-    <div class="tab-pane fade" id="take_mail">
-    <ul class="list-group">
-        {% for mail in take_mails %}
-            <a href="{% url 'mail_page' mail.id %}" class="list-group-item">{{ mail.WhereUP }}
-                <span class="glyphicon glyphicon-arrow-right"></span>{{ mail.WhereDown }}
-            </a>
-        {% endfor %}
-    </ul>
+        <div class="tab-pane fade" id="please_mail">
+            <ul class="list-group">
+                {% for mail in mails %}
+                    {% if mail.Situation == 2 and mail.Host_user == request.user %}
+                        <a href="{% url 'mail_page' mail.id %}"
+                           class="list-group-item">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                            {{ mail.WhereUP }}&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-send"></span>
+                            {{ mail.WhereDown }}
+                            <span class="label label-success">成功收取</span>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="take_mail">
+            <ul class="list-group">
+                {% for mail in mails %}
+                    {% if mail.Situation == 2 and mail.Take_user == request.user %}
+                        <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>
+                            {{ mail.WhereUP }}&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-send"></span>
+                            {{ mail.WhereDown }}
+                        <span class="label label-success">成功帮跑</span>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="do_mail">
+            <ul class="list-group">
+                {% for mail in mails %}
+                    {% if mail.Situation == 1 and mail.Host_user == request.user %}
+                        <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>
+                            {{ mail.WhereUP }}&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-send"></span>
+                            {{ mail.WhereDown }}
+                            <span class="label label-info">等待到达</span>
+                        </a>
+                    {% elif mail.Situation == 1 and mail.Take_user == request.user %}
+                        <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>
+                            {{ mail.WhereUP }}&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-send"></span>
+                            {{ mail.WhereDown }}
+                            <span class="label label-danger">正在运送</span>
+                        </a>
+                    {% elif mail.Situation == 0 and mail.Host_user == request.user %}
+                        <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>
+                            {{ mail.WhereUP }}&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-send"></span>
+                            {{ mail.WhereDown }}
+                            <span class="label label-warning">等待领取</span>
+                        </a>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
+        <script>
+            $(function () {
+                $('#myTab li:eq(3) a').tab('show');
+            });
+        </script>
     </div>
-</div>
-<script>
-   $(function () {
-      $('#myTab li:eq(3) a').tab('show');
-   });
-</script>
-</div>
 
 
 </body>
