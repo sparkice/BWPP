@@ -103,8 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
 GRAPPELLI_ADMIN_TITLE = '帮我跑跑后台管理'
 LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
-#TIME_ZONE = 'Asia/Shanghai'
+#TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 
 USE_L10N = True
