@@ -24,12 +24,13 @@ SECRET_KEY = '^k+ij%-tdz#5#xwp@w&(s!ljf@fv58oa9mrn#&9*^nox(6%!(w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['123.206.231.168','127.0.0.1']
+ALLOWED_HOSTS = ['123.206.231.168','127.0.0.1','nuaainfo.com']
 
 # Application definition
 
 INSTALLED_APPS = [
     'grappelli',
+    'captcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+
 ]
 
 MIDDLEWARE = [
@@ -54,8 +56,7 @@ ROOT_URLCONF = 'NewBWPP.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,7 +114,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_MATH_CHALLENGE_OPERATOR = 'x'
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'

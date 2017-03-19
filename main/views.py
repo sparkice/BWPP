@@ -1,53 +1,101 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect,HttpResponse
+from django.shortcuts import render, redirect,render_to_response
 from django.utils import timezone
 from base64 import b64encode
 from . import models
-from .forms import RegisterForm, MailForm
+from .forms import RegisterForm, MailForm,CaptchaTestForm
 
+def some_view(request):
+	if request.POST:
+		form = CaptchaTestForm(request.POST)
 
-def register(request):
-	if request.method == 'GET':
-		rf = RegisterForm()
-		return render(request, 'register.html', {'form': rf})
-	if request.method == 'POST':
-		rf = RegisterForm(request.POST)
-		if request.POST.get('raw_username', '') != '':  # 不懂
-			try:
-				user = models.NewUser.objects.get(username=request.POST.get('raw_username', ''))
-			except ObjectDoesNotExist:
-				return render(request, 'register.html', {'form': rf, 'msg': "该用户名可用！"})
-			else:
-				return render(request, 'register.html', {'form': rf, 'msg': "该用户名已存在！"})
+		# Validate the form: the captcha field will automatically
+		# check the input
+		if form.is_valid():
+			human = True
+			return HttpResponse(form.cleaned_data) # 这里没有建立模型，如果成功则直接打印
 		else:
-			if rf.is_valid():
-				username = rf.cleaned_data['username']
-				# userID = rf.cleaned_data['userID']    #尝试测试学号
-				filter_result1 = models.NewUser.objects.filter(username=username)
-				# filter_result2 = models.NewUser.objects.filter(userID=userID)
-				if len(filter_result1) > 0:  # 用户名(手机号码）或 学号 重名
-					return render(request, 'register.html', {'form': rf, 'msg': "该手机号或学号已存在！"})
-				else:
-					username = rf.cleaned_data['username']
-					userID = rf.cleaned_data['userID']
-					password1 = rf.cleaned_data['password1']
-					password2 = rf.cleaned_data['password2']
-				if password1 != password2:
-					return render(request, 'register.html', {'form': rf, 'msg': "输入密码不一致！"})
-				else:
-					user = models.NewUser(username=username, password=password1)
-					user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
-					user.save()
-					new_password = password1.encode('ascii')
-					u = models.UserProfile.objects.create(user=user, username=username,
-					                                      userID=userID, password=new_password,
-					                                      userphone=username)  # 注册成功则创建对应user profile
-					u.save()
-					return redirect('/login', {'form': rf, 's': "注册成功！请登录！"})
+			return HttpResponse('validate error')
+	else:
+		form = CaptchaTestForm()
+
+	return render_to_response('template.html',locals())
+# def register(request):
+# 	if request.method == 'GET':
+# 		rf = RegisterForm()
+# 		return render(request, 'register.html', {'form': rf})
+# 	if request.method == 'POST':
+# 		rf = RegisterForm(request.POST)
+# 		if request.POST.get('raw_username', '') != '':  # 不懂
+# 			try:
+# 				user = models.NewUser.objects.get(username=request.POST.get('raw_username', ''))
+# 			except ObjectDoesNotExist:
+# 				return render(request, 'register.html', {'form': rf, 'msg': "该用户名可用！"})
+# 			else:
+# 				return render(request, 'register.html', {'form': rf, 'msg': "该用户名已存在！"})
+# 		else:
+# 			if rf.is_valid():
+# 				username = rf.cleaned_data['username']
+# 				# userID = rf.cleaned_data['userID']    #尝试测试学号
+# 				filter_result1 = models.NewUser.objects.filter(username=username)
+# 				# filter_result2 = models.NewUser.objects.filter(userID=userID)
+# 				if len(filter_result1) > 0:  # 用户名(手机号码）或 学号 重名
+# 					return render(request, 'register.html', {'form': rf, 'msg': "该手机号或学号已存在！"})
+# 				else:
+# 					username = rf.cleaned_data['username']
+# 					userID = rf.cleaned_data['userID']
+# 					password1 = rf.cleaned_data['password1']
+# 					password2 = rf.cleaned_data['password2']
+# 				if password1 != password2:
+# 					return render(request, 'register.html', {'form': rf, 'msg': "输入密码不一致！"})
+# 				else:
+# 					user = models.NewUser(username=username, password=password1)
+# 					user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
+# 					user.save()
+# 					new_password = password1.encode('ascii')
+# 					u = models.UserProfile.objects.create(user=user, username=username,
+# 					                                      userID=userID, password=new_password,
+# 					                                      userphone=username)  # 注册成功则创建对应user profile
+# 					u.save()
+# 					return redirect('/login', {'form': rf, 's': "注册成功！请登录！"})
+# 			else:
+# # 				return render(request, 'register.html', {'form': rf, 'msg': "等待正确输入！"})
+def register(request):
+	msg = ""
+	if request.POST:
+		rf = CaptchaTestForm(request.POST)
+		if rf.is_valid():
+			username = rf.cleaned_data['username']
+			filter_result1 = models.NewUser.objects.filter(username=username)
+			if len(filter_result1) > 0:
+				msg = "该手机或学号已经存在"
+				return render(request, 'register.html', {'rf': rf, 'msg': msg})
 			else:
-				return render(request, 'register.html', {'form': rf, 'msg': "等待正确输入！"})
+				userID = rf.cleaned_data['userID']    #尝试测试学号
+				username = rf.cleaned_data['username']
+				userID = rf.cleaned_data['userID']
+				password1 = rf.cleaned_data['password1']
+				password2 = rf.cleaned_data['password2']
+
+			user = models.NewUser(username=username, password=password1)
+			user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
+			user.save()
+			new_password = password1.encode('ascii')
+			u = models.UserProfile.objects.create(user=user, username=username,
+																  userID=userID, password=new_password,
+																  userphone=username)  # 注册成功则创建对应user profile
+			u.save()
+
+			return redirect('/login', {'rf': rf, 's': "注册成功！请登录！"})
+
+		else:
+			# return HttpResponse('么么哒！验证码是小写哟')
+			msg = "你的验证码输入有误"
+	else:
+		rf = CaptchaTestForm()
+	return  render(request,'register.html',{'rf':rf,'msg':msg})
 
 
 @login_required

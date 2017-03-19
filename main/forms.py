@@ -1,5 +1,17 @@
 from django import forms
-from .models import User,Mail
+from captcha.fields import CaptchaField
+
+class CaptchaTestForm(forms.Form):
+	captcha = CaptchaField(label='captcha')  # 为生成的验证码图片，以及输入框
+	username = forms.CharField(label='username',
+	                           max_length=50,
+	                           widget=forms.TextInput(attrs={'id': 'username', 'onclick': 'authentication()'}))
+	userID = forms.CharField(label='userID',
+	                         max_length=10,
+	                         widget=forms.TextInput(attrs={'id': 'userID', 'onclick': 'authentication()'}))
+	password1 = forms.CharField(widget=forms.PasswordInput)
+	password2 = forms.CharField(widget=forms.PasswordInput)
+
 
 
 class LoginForm(forms.Form):
@@ -24,6 +36,7 @@ class RegisterForm(forms.Form):
                                widget=forms.TextInput(attrs={'id': 'userID', 'onclick': 'authentication()'}))
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
+    captcha = CaptchaField()
 
 
 class MailForm(forms.Form):
@@ -54,6 +67,8 @@ class MailForm(forms.Form):
             }
         )
     )
+
+    captcha = CaptchaField()
 
 class RePassForm(forms.Form):
     old_pd = forms.CharField(widget=forms.PasswordInput)

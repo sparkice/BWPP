@@ -19,6 +19,8 @@ from main import views as main_views
 from django.contrib.auth.views import login,logout
 urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
+    url(r'^captcha/', include('captcha.urls')),
+    url(r'^test/', main_views.some_view),
     url(r'^admin/', admin.site.urls),
     url(r'^$',  main_views.index,  name='index'),
     url(r'^mail/(?P<mail_id>[0-9]+)$', main_views.mailpage,  name='mail_page'),
