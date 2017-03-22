@@ -12,14 +12,15 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
+
 <body>
 
 <nav class="navbar navbar-default " role="navigation">
@@ -45,6 +46,8 @@
         </ul>
     </div>
 </nav>
+
+
 <div class="page-header text-center">
     <h2>帮我跑跑
         <small>代取快递列表</small>
@@ -55,13 +58,13 @@
 </div>
 
 <div class="well text-center">
+ <a href="{% url 'new_mail' %}" type="button" class="btn btn-primary btn-block btn-lg">提交新快递</button> </a>
+    <br>
     {% for mail in mails %}
         <a href="{% url 'mail_page' mail.id %}" class="list-group-item"> <span class="glyphicon glyphicon-map-marker"></span>{{ mail.WhereUP }}&nbsp;&nbsp;<span class="glyphicon glyphicon-send"></span>{{ mail.WhereDown }}
         </a>
     {% endfor %}
 </div>
-
- <a href="{% url 'new_mail' %}" type="button" class="btn btn-primary btn-block btn-lg">提交新快递</button> </a>
 
 </body>
 

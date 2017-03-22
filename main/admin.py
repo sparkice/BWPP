@@ -9,9 +9,10 @@ class MailAdmin(admin.ModelAdmin):
 
 
 class NewUserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user','username', 'userID', 'kind_num','please_num','do_num')
+    list_display = ('user','myname','username', 'userID', 'kind_num','please_num','do_num','checknum','zhiyuan','situation','myimage')
 
-
+# class NewUserAdmin(admin.ModelAdmin):
+#     list_display = ('user','permissions')
 admin.site.register(Mail, MailAdmin)
 admin.site.register(NewUser)
 admin.site.register(UserProfile,NewUserProfileAdmin)

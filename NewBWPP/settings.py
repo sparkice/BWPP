@@ -114,10 +114,22 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
-CAPTCHA_MATH_CHALLENGE_OPERATOR = 'x'
+# AccessKey  = "FJcHkMNZLlYlbKFE0PwpF8IGo1kGPnh2kRwqLkdN" #七牛公钥
+# SecretKey = "22Yt8MWlbnWrE7EzeM1j5C5BpsiwLk78rOmQS-Rp"  #七牛秘钥
+# BUCKET_NAME = 'bwpp'                                    #仓库名
+
+DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuStorage'
+QINIU_ACCESS_KEY = 'FJcHkMNZLlYlbKFE0PwpF8IGo1kGPnh2kRwqLkdN'
+QINIU_SECRET_KEY	= '22Yt8MWlbnWrE7EzeM1j5C5BpsiwLk78rOmQS-Rp'
+QINIU_BUCKET_NAME	= 'bwpp'
+QINIU_BUCKET_DOMAIN = 'on3w0ajxj.bkt.clouddn.com'
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
 LOGIN_URL = '/login/'
+
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'main.NewUser'

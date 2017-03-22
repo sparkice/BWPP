@@ -5,12 +5,13 @@ class CaptchaTestForm(forms.Form):
 	captcha = CaptchaField(label='captcha')  # 为生成的验证码图片，以及输入框
 	username = forms.CharField(label='username',
 	                           max_length=50,
-	                           widget=forms.TextInput(attrs={'id': 'username', 'onclick': 'authentication()'}))
+	                           widget=forms.TextInput(attrs={'id': 'username', 'onclick': 'authentication()','class':'form-control','placeholder':'用于稍后我们的短信验证'}))
 	userID = forms.CharField(label='userID',
 	                         max_length=10,
-	                         widget=forms.TextInput(attrs={'id': 'userID', 'onclick': 'authentication()'}))
-	password1 = forms.CharField(widget=forms.PasswordInput)
-	password2 = forms.CharField(widget=forms.PasswordInput)
+	                         widget=forms.TextInput(attrs={'id': 'userID', 'onclick': 'authentication()','class':'form-control',
+                                                           }))
+	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+	password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
 
 
@@ -68,8 +69,9 @@ class MailForm(forms.Form):
         )
     )
 
-    captcha = CaptchaField()
-
 class RePassForm(forms.Form):
     old_pd = forms.CharField(widget=forms.PasswordInput)
     new_pd = forms.CharField(widget=forms.PasswordInput)
+
+class CheckForm(forms.Form):
+    updatephoto = forms.ImageField(label='updatephoto',max_length=100)

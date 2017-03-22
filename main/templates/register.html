@@ -50,12 +50,12 @@
     }
 </script>
 
-
+{% if rf.errors %}
 <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>等待警告!</strong>{{ msg }}
+  <strong>{{ msg }}</strong>
 </div>
-
+{% endif %}
 <div class="page-header text-center">
     <h1>帮我跑跑
         <small>注册模块</small>
@@ -65,15 +65,14 @@
 <div class="well text-center">
     <form method="post" action="" class="form-horizontal" role="form">
         {% csrf_token %}
-
         <div class="input-group">
             <span class="input-group-addon">手机号码</span>
-            {{ rf.userID }}
+            {{ rf.username }}
         </div>
 
         <div class="input-group">
             <span class="input-group-addon">个人学号</span>
-            {{ rf.username }}
+            {{ rf.userID }}
         </div>
 
         <div class="input-group">
@@ -86,9 +85,10 @@
             {{ rf.password2 }}
         </div>
          <div class="input-group">
-            {{ rf.captcha}}
-             <button class='js-captcha-refresh'>刷新验证码</button>
+             <span class="input-group-addon">验证码</span>
+            {{ rf.captcha }}
          </div>
+        <br>
      <div class="btn-group">
               <button type="submit" class="btn btn-primary btn-block" onclick="return check()">注册</button>
                <a href="{% url 'login' %}" type="button" class="btn btn-default btn-block">有账户了？去登录 </a>
@@ -96,16 +96,5 @@
     </form>
 
 </div>
-<script>
-    $('.js-captcha-refresh').click(function(){
-    $form = $(this).parents('form');
-
-    $.getJSON($(this).data('url'), {}, function(json) {
-        // This should update your captcha image src and captcha hidden input
-    });
-
-    return false;
-});
-</script>
 </body>
 </html>

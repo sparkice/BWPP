@@ -20,7 +20,6 @@ from django.contrib.auth.views import login,logout
 urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^captcha/', include('captcha.urls')),
-    url(r'^test/', main_views.some_view),
     url(r'^admin/', admin.site.urls),
     url(r'^$',  main_views.index,  name='index'),
     url(r'^mail/(?P<mail_id>[0-9]+)$', main_views.mailpage,  name='mail_page'),
@@ -31,5 +30,6 @@ urlpatterns = [
     url(r'^user/$',main_views.user, name='user'),
     url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take'),
     url(r'^get/(?P<mail_id>[0-9]+)$',main_views.get, name='get'),
-    url(r'^quxiao/(?P<mail_id>[0-9]+)$',main_views.quxiao, name='quxiao')
+    url(r'^quxiao/(?P<mail_id>[0-9]+)$',main_views.quxiao, name='quxiao'),
+    url(r'^check/$',main_views.check,name='check')
 ]
