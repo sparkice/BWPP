@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required,permission_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.utils import timezone
-
+from django.contrib import messages
 from . import models
 from .forms import MailForm, CaptchaTestForm,CheckForm
 from .check import send_sms,createPhoneCode
@@ -13,11 +13,6 @@ import qiniu
 
 key = "7720028ac388fe8b413e2cd91a532307" # 云片网个人秘钥
 text = "【航宇青协】您的”帮我跑跑“平台验证码是" # 云片网模板语言
-
-# apikey:成功注册后登录云片官网,进入后台可查看
-# text:需要使用已审核通过的模板或者默认模板
-# mobile:接收的手机号,仅支持单号码发送
-
 # def register(request):
 # 	if request.method == 'GET':
 # 		rf = RegisterForm()
@@ -58,6 +53,7 @@ text = "【航宇青协】您的”帮我跑跑“平台验证码是" # 云片�
 # 					return redirect('/login', {'form': rf, 's': "注册成功！请登录！"})
 # 			else:
 # # 				return render(request, 'register.html', {'form': rf, 'msg': "等待正确输入！"})
+
 def register(request):
     msg = ""
     if request.POST:
@@ -105,13 +101,13 @@ def index(request):
     return render(request, 'index.html', {'mails': mail})  # 返回字典
 
 
-@permission_required('main.success_check',login_url='/user') #  转义到check
+@permission_required('main.success_check',login_url='/check/') #  转义到check
 def mailpage(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     return render(request, 'mailpage.html', {'mail': mail})
 
 
-@login_required
+@permission_required('main.success_check',login_url='/check/')
 def Mail(request):
     if request.method == 'POST':
         qf = MailForm(request.POST)
@@ -134,7 +130,7 @@ def Mail(request):
         return render(request, 'new.html')
 
 
-@login_required
+@permission_required('main.success_check',login_url='/check/')
 def user(request):
     user = request.user
     all_mails = models.Mail.objects.all()
@@ -145,7 +141,8 @@ def user(request):
     return render(request, 'user.html', {'mails': mails})
 
 
-@login_required
+
+@permission_required('main.success_check',login_url='/check/')
 def take(request, mail_id):
     user = request.user  # 从当前请求中得到用户名
     mail = models.Mail.objects.get(pk=mail_id)
@@ -157,7 +154,8 @@ def take(request, mail_id):
     return HttpResponseRedirect('/user/')
 
 
-@login_required
+
+@permission_required('main.success_check',login_url='/check/')
 def get(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     mail.Situation = 2  # 到达状态码数
@@ -170,7 +168,8 @@ def get(request, mail_id):
     return HttpResponseRedirect('/user/')
 
 
-@login_required
+
+@permission_required('main.success_check',login_url='/check/')
 def quxiao(request, mail_id):
     models.Mail.objects.get(pk=mail_id).delete()
     user = request.user
@@ -183,13 +182,19 @@ def quxiao(request, mail_id):
 @login_required
 def check(request):
     user = request.user
-    u = models.UserProfile.objects.get(user=user)
+    uProfile = models.UserProfile.objects.get(user=user)
     if request.method == 'POST':
         form = CheckForm(request.POST,request.FILES)
         if form.is_valid():
-            u.myimage = form.cleaned_data['updatephoto']
-            u.save()
-        return HttpResponse("success! boy!")
+            form_sms_num = form.cleaned_data['sms_check']
+            if form_sms_num == uProfile.checknum:
+                uProfile.myimage = form.cleaned_data['updatephoto']
+                uProfile.situation = 1
+                uProfile.save()
+                messages.success(request, '提交认证成功！我们的工作人员将在半小时内验证请求')
+                return HttpResponseRedirect('/')
+            else:
+                messages.error(request,'貌似你输入的验证码和注册时候的验证码不符')
     else:
         form = CheckForm()
     return render(request,'check.html',{'form':form})

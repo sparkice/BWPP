@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take'),
     url(r'^get/(?P<mail_id>[0-9]+)$',main_views.get, name='get'),
     url(r'^quxiao/(?P<mail_id>[0-9]+)$',main_views.quxiao, name='quxiao'),
-    url(r'^check/$',main_views.check,name='check')
+    url(r'^check/',main_views.check,name='check')
 ]

@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     userID = models.CharField(max_length=10)  # 学号
     # 第三次增加！
     myname = models.CharField(max_length=10)  # 个人姓名
-    checknum = models.CharField(max_length=5)  # 个人验证码
+    checknum = models.IntegerField()  # 个人验证码
     zhiyuan = models.IntegerField(default=0)  # 志愿服务时长
     situation = models.IntegerField(default=0)  # 所处环境，0表示注册好了，1表示1正在审核，2表示审核通过，-1表示封号
     myimage = models.ImageField(max_length=100,blank=True,upload_to='upload/%Y/%m/%d') #　个人照片哼唧
