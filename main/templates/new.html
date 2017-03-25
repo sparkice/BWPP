@@ -2,8 +2,10 @@
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <!--we_ui -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -12,67 +14,86 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <title>Title</title>
+    <style type="text/css">
+        a:active{
+            text-decoration: none;
+        }
+    </style>
+    <title>发布</title>
 </head>
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
-    <div class="navbar-header text-center">
-        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                data-target="#example-navbar-collapse">
-            <span class="sr-only">切换导航</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand">{{ request.user }}</a>
-    </div>
-    <div class="collapse navbar-collapse" id="example-navbar-collapse">
-        <ul class="nav navbar-nav">
-            <li><a herf ="#">学号{{ user.userprofile.userID }} <span class="label label-default">普通</span> </a>
-</li>
-            <li><a href="/user">个人主页</a></li>
-            <li><a href="{% url 'logout' %}">退出</a></li>
-        </ul>
-    </div>
-</nav>
+<div class="container">
 
 <div class="page-header text-center">
-    <h2>帮我跑跑
-        <small>编辑新快递</small>
-    </h2>
+    <h1>帮我跑跑
+        <small>发布</small>
+    </h1>
 </div>
-<div class="well text-center">
-    <form method="post" action="" class="form-horizontal" role="form">
+    <div class="weui-cells__title">关键信息填写</div>
+<div class="weui-cells weui-cells_form">
+    <form method="post" role="form">
         {% csrf_token %}
         {{ qf.non_field_errors }}
-        <div class="input-group">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">取件地</label></div>
+             <div class="weui-cell__bd">
             {{ qf.whereup.errors }}
             {{ qf.whereup }}
-            <span class="input-group-addon">取件地</span>
-            <input type="text" id="u"  class="form-control" name="whereup" placeholder="请准确填写"/>
+            <input type="text" class="weui-input" name="whereup"/>
+             </div>
         </div>
-
-        <br>
-        <div class="input-group">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">取件地</label></div>
+              <div class="weui-cell__bd">
             {{ qf.wheredown.errors }}
             {{ qf.wheredown }}
-            <span class="input-group-addon">收件地</span>
-            <input type="text" id="i"  class="form-control" name="wheredown" placeholder="请准确填写"/>
+             <input type="text" class="weui-input" name="wheredown"/>
+              </div>
         </div>
-        <br>
+        <div class="weui-cells__title">更多信息</div>
+          <div class="weui-cell">
             {{ qf.detail.error }}
             {{ qf.detail }}
-             <span class="input-group-addon">更多信息</span>
-             <textarea rows="5" id="d" name="detail"  class="form-control" placeholder="当所在快递含特殊信息时填写,可以直接复制粘贴"></textarea>
-        <br>
-        <button type="submit" class="btn btn-primary btn-block">提交</button>
+
+            <div class="weui-cell__bd">
+             <textarea rows="5" id="d" class="weui-textarea" placeholder="当所在快递含特殊信息时填写,建议直接复制粘贴短信内容"></textarea>
+            </div>
+          </div>
+        <button type="submit" class="weui-btn weui-btn_primary">提交</button>
     </form>
 </div>
+ <div class="weui-tabbar">
+    <a href="{% url 'index' %}" class="weui-tabbar__item">
+    {% comment %}  <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>{% endcomment %}
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/204%E9%A6%96%E9%A1%B5-%E7%BA%BF%E6%80%A7.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">广场</p>
+    </a>
+    <a href="{% url 'new_mail' %}" class="weui-tabbar__item  weui-bar__item--on" >
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/16%E5%AF%84%E4%BB%B6%E3%80%81%E5%8F%91%E9%80%81.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">发布</p>
+    </a>
+    <a href="javascript:;" class="weui-tabbar__item">
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/51%E5%BF%AB%E9%80%92%E5%91%98-%E7%BA%BF%E6%80%A7%20%281%29.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">进行</p>
+    </a>
+
+    <a href="{% url 'user' %}" class="weui-tabbar__item">
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/iconfont-mingpian.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">个人</p>
+    </a>
+  </div>
+</div>
 </body>
+<script
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
 </html>

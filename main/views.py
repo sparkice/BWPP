@@ -9,7 +9,6 @@ from django.contrib import messages
 from . import models
 from .forms import MailForm, CaptchaTestForm,CheckForm
 from .check import send_sms,createPhoneCode
-
 key = "7720028ac388fe8b413e2cd91a532307" # 云片网个人秘钥
 text = "【航宇青协】您的”帮我跑跑“平台验证码是" # 云片网模板语言
 # def register(request):
@@ -99,13 +98,13 @@ def index(request):
 
     return render(request, 'index.html', {'mails': mail})  # 返回字典
 
-
+@login_required
 @permission_required('main.success_check',login_url='/check/') #  转义到check
 def mailpage(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     return render(request, 'mailpage.html', {'mail': mail})
 
-
+@login_required
 @permission_required('main.success_check',login_url='/check/')
 def Mail(request):
     if request.method == 'POST':
@@ -128,7 +127,7 @@ def Mail(request):
     else:
         return render(request, 'new.html')
 
-
+@login_required
 @permission_required('main.success_check',login_url='/check/')
 def user(request):
     user = request.user
@@ -140,7 +139,7 @@ def user(request):
     return render(request, 'user.html', {'mails': mails})
 
 
-
+@login_required
 @permission_required('main.success_check',login_url='/check/')
 def take(request, mail_id):
     user = request.user  # 从当前请求中得到用户名
@@ -152,8 +151,7 @@ def take(request, mail_id):
         mail.save()
     return HttpResponseRedirect('/user/')
 
-
-
+@login_required
 @permission_required('main.success_check',login_url='/check/')
 def get(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
@@ -167,7 +165,7 @@ def get(request, mail_id):
     return HttpResponseRedirect('/user/')
 
 
-
+@login_required
 @permission_required('main.success_check',login_url='/check/')
 def quxiao(request, mail_id):
     models.Mail.objects.get(pk=mail_id).delete()

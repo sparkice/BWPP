@@ -45,7 +45,7 @@ class MailForm(forms.Form):
     whereup = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'mail_whereup',
+                'class': 'weui-input',
                 'id': 'mail_whereup'
             }
         )
@@ -54,7 +54,7 @@ class MailForm(forms.Form):
     wheredown = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'mail_wheredown',
+                'class': 'weui-input',
                 'id': 'mail_wheredown'
             }
         )
@@ -63,7 +63,7 @@ class MailForm(forms.Form):
     detail = forms.CharField(
         required=False, widget=forms.TextInput(
             attrs={
-                'class': 'mail_detail',
+                'class': 'weui-textarea',
                 'id': 'mail_detail',
                 'height': 20,
             }
