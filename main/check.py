@@ -2,7 +2,6 @@ from urllib import parse
 import http.client
 import random
 
-
 def send_sms(apikey, text, mobile):
 	# 服务地址
 	sms_host = "sms.yunpian.com"

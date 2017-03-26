@@ -1,17 +1,17 @@
-import http.client
-from urllib import parse
-
-from django.contrib.auth.decorators import login_required,permission_required
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, render_to_response
-from django.utils import timezone
 from django.contrib import messages
-from . import models
-from .forms import MailForm, CaptchaTestForm,CheckForm
-from .check import send_sms,createPhoneCode
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.utils import timezone
 
-key = "7720028ac388fe8b413e2cd91a532307" # 云片网个人秘钥
-text = "【航宇青协】您的”帮我跑跑“平台验证码是" # 云片网模板语言
+from . import models
+from .check import send_sms, createPhoneCode
+from .forms import MailForm, CaptchaTestForm, CheckForm
+
+key = "7720028ac388fe8b413e2cd91a532307"  # 云片网个人秘钥
+text = "【航宇青协】您的”帮我跑跑“平台验证码是"  # 云片网模板语言
+
+
 # def register(request):
 # 	if request.method == 'GET':
 # 		rf = RegisterForm()
@@ -64,22 +64,22 @@ def register(request):
                 msg = "该手机或学号已经存在"
                 return render(request, 'register.html', {'rf': rf, 'msg': msg})
             else:
-                userID = rf.cleaned_data['userID']  #学号
-                password1 = rf.cleaned_data['password1'] #密码
-                checknum = createPhoneCode()    #生成的验证码
-
-            user = models.NewUser(username=username, password=password1)
-            user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
-            user.save()
-            new_password = password1.encode('ascii')
-            u = models.UserProfile.objects.create(user=user, username=username,
+                username = rf.cleaned_data['username']
+                userID = rf.cleaned_data['userID']  # 学号
+                password1 = rf.cleaned_data['password1']  # 密码
+                checknum = createPhoneCode()  # 生成的验证码
+                user = models.NewUser(username=username, password=password1)
+                user.set_password(password1)  # 重要！！！设置密码加密，不然是明文，admin里密码显示也是明文，登录不了
+                user.save()
+                new_password = password1.encode('ascii')
+                u = models.UserProfile.objects.create(user=user, username=username,
                                                   userID=userID, password=new_password,
-                                                  userphone=username,checknum=checknum)  # 注册成功则创建对应user
+                                                  userphone=username, checknum=checknum)  # 注册成功则创建对应user
 
-            u.save()
-            sms_log = send_sms(key,text+checknum,username)
-            print(sms_log)
-            return redirect('/login', {'rf': rf, 's': "注册成功！请登录！"})
+                u.save()
+                sms_log = send_sms(key, text + checknum, username)
+                print(sms_log)
+                return redirect('/login', {'rf': rf, 's': "注册成功！请登录！"})
 
         else:
             # return HttpResponse('么么哒！验证码是小写哟')
@@ -100,13 +100,13 @@ def index(request):
     return render(request, 'index.html', {'mails': mail})  # 返回字典
 
 
-@permission_required('main.success_check',login_url='/check/') #  转义到check
+@permission_required('main.success_check', login_url='/check/')  # 转义到check
 def mailpage(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     return render(request, 'mailpage.html', {'mail': mail})
 
 
-@permission_required('main.success_check',login_url='/check/')
+@permission_required('main.success_check', login_url='/check/')
 def Mail(request):
     if request.method == 'POST':
         qf = MailForm(request.POST)
@@ -129,19 +129,30 @@ def Mail(request):
         return render(request, 'new.html')
 
 
-@permission_required('main.success_check',login_url='/check/')
+@permission_required('main.success_check', login_url='/check/')
 def user(request):
+    user = request.user
+    all_mails = models.Mail.objects.all()
+    mails = []
+    print("1")
+    for x in all_mails:
+        if x.Take_user == user or x.Host_user == user:
+            mails.append(x)
+            print("2")
+    return render(request, 'user.html', {'mails': mails})
+
+
+@permission_required('main.success_check', login_url='/check/')
+def doing(request):
     user = request.user
     all_mails = models.Mail.objects.all()
     mails = []
     for x in all_mails:
         if x.Take_user == user or x.Host_user == user:
             mails.append(x)
-    return render(request, 'user.html', {'mails': mails})
+    return render(request, 'doing.html', {'mails': mails})
 
-
-
-@permission_required('main.success_check',login_url='/check/')
+@permission_required('main.success_check', login_url='/check/')
 def take(request, mail_id):
     user = request.user  # 从当前请求中得到用户名
     mail = models.Mail.objects.get(pk=mail_id)
@@ -150,16 +161,16 @@ def take(request, mail_id):
         mail.Take_user = user  # 这里存在一个问题是如果先前有一个物品已经有了Take_user 则会产生错误！
         mail.Take_time = timezone.now()
         mail.save()
-    return HttpResponseRedirect('/user/')
+    return HttpResponseRedirect('/doing/')
 
 
-
-@permission_required('main.success_check',login_url='/check/')
+@permission_required('main.success_check', login_url='/check/')
 def get(request, mail_id):
     mail = models.Mail.objects.get(pk=mail_id)
     mail.Situation = 2  # 到达状态码数
     user = mail.Take_user
     u = models.UserProfile.objects.get(user=user)
+    u.zhiyuan += 1
     u.do_num += 1
     u.save()
     mail.Receive_time = timezone.now()
@@ -167,8 +178,7 @@ def get(request, mail_id):
     return HttpResponseRedirect('/user/')
 
 
-
-@permission_required('main.success_check',login_url='/check/')
+@permission_required('main.success_check', login_url='/check/')
 def quxiao(request, mail_id):
     models.Mail.objects.get(pk=mail_id).delete()
     user = request.user
@@ -178,22 +188,25 @@ def quxiao(request, mail_id):
     u.save()
     return HttpResponseRedirect('/user/')
 
-@login_required
+
 def check(request):
     user = request.user
     uProfile = models.UserProfile.objects.get(user=user)
     if request.method == 'POST':
-        form = CheckForm(request.POST,request.FILES)
+        form = CheckForm(request.POST, request.FILES)
         if form.is_valid():
             form_sms_num = form.cleaned_data['sms_check']
             if form_sms_num == uProfile.checknum:
                 uProfile.myimage = form.cleaned_data['updatephoto']
                 uProfile.situation = 1
                 uProfile.save()
-                messages.success(request, '提交认证成功！我们的工作人员将在半小时内验证请求')
+                messages.success(request, '提交认证成功！我们的工作人员将在四个小时内验证请求')
                 return HttpResponseRedirect('/')
             else:
-                messages.error(request,'貌似你输入的验证码和注册时候的验证码不符')
+                messages.error(request, '貌似你输入的验证码和注册时候的验证码不符')
     else:
         form = CheckForm()
-    return render(request,'check.html',{'form':form})
+    return render(request, 'check.html', {'form': form})
+
+def xieyi(request):
+   return render(request,'xieyi.html')

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>进行</title>
+       <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <!--we_ui -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    {% comment %}去除点击时候的下划线{% endcomment %}
+    <style type="text/css">
+        a:active{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header text-center">
+    <h1>帮我跑跑
+        <small>进行</small>
+    </h1>
+</div>
+<div class="container">
+<div class="weui-form-preview">
+      {% for mail in mails %}
+           {% if mail.Situation == 1 and mail.Host_user == request.user %}
+                <div class="weui-form-preview__hd">
+                    <label class="weui-form-preview__label">状态</label>
+                    <span class="weui-form-preview__value   label label-success">准备签收</span>
+                  </div>
+              <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                      <label class="weui-form-preview__label">出发地</label>
+                      <span class="weui-form-preview__value">  {{ mail.WhereUP }}&nbsp; </span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                      <label class="weui-form-preview__label">到达地</label>
+                      <span class="weui-form-preview__value"> {{ mail.WhereDown }}</span>
+                    </div>
+              </div>
+                <div class="weui-form-preview__ft">
+                  <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="{% url 'mail_page' mail.id %}">查看</a>
+                 </div>
+             {% elif mail.Situation == 1 and mail.Take_user == request.user %}
+               <div class="weui-form-preview__hd">
+                    <label class="weui-form-preview__label">状态</label>
+                    <span class="weui-form-preview__value label label-warning">正在帮跑</span>
+               </div>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                      <label class="weui-form-preview__label">出发地</label>
+                      <span class="weui-form-preview__value">  {{ mail.WhereUP }}&nbsp; </span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                      <label class="weui-form-preview__label">到达地</label>
+                      <span class="weui-form-preview__value"> {{ mail.WhereDown }}</span>
+                    </div>
+              </div>
+                <div class="weui-form-preview__ft">
+                  <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="{% url 'mail_page' mail.id %}">查看</a>
+                 </div>
+            {% elif mail.Situation == 0 and mail.Host_user == request.user %}
+        <div class="weui-form-preview__hd">
+                        <label class="weui-form-preview__label">状态</label>
+                        <span class="weui-form-preview__value label label-default">等待领取</span>
+        </div>
+                  <div class="weui-form-preview__bd">
+                        <div class="weui-form-preview__item">
+                          <label class="weui-form-preview__label">出发地</label>
+                          <span class="weui-form-preview__value">  {{ mail.WhereUP }}&nbsp; </span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                          <label class="weui-form-preview__label">到达地</label>
+                          <span class="weui-form-preview__value"> {{ mail.WhereDown }}</span>
+                        </div>
+                  </div>
+                 <div class="weui-form-preview__ft">
+                  <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="{% url 'mail_page' mail.id %}">查看</a>
+                 </div>
+            {% endif %}
+    {% endfor %}
+</div>
+</div>
+<div class="weui-tabbar navbar-fixed-bottom">
+    <a href="{% url 'index' %}" class="weui-tabbar__item">
+    {% comment %}  <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>{% endcomment %}
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/204%E9%A6%96%E9%A1%B5-%E7%BA%BF%E6%80%A7.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">广场</p>
+    </a>
+
+    <a href="{% url 'new_mail' %}" class="weui-tabbar__item" >
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/16%E5%AF%84%E4%BB%B6%E3%80%81%E5%8F%91%E9%80%81.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">发布</p>
+    </a>
+    <a href="{% url 'doing' %}" class="weui-tabbar__item weui-bar__item--on">
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/51%E5%BF%AB%E9%80%92%E5%91%98-%E7%BA%BF%E6%80%A7%20%281%29.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">进行</p>
+    </a>
+
+    <a href="{% url 'user' %}" class="weui-tabbar__item">
+      <div class="weui-tabbar__icon">
+        <img src="http://onbwt5j59.bkt.clouddn.com/iconfont-mingpian.png" alt="">
+      </div>
+      <p class="weui-tabbar__label">个人</p>
+    </a>
+  </div>
+</div>
+<div class="weui-footer ">
+  <p class="weui-footer__text">Copyright © 2017 青协帮跑</p>
+</div>
+<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+</body>
+
+
+</html>

@@ -57,7 +57,7 @@
 </div>
 {% endif %}
 <div class="page-header text-center">
-    <h1>帮我跑跑
+    <h1>帮我跑跑内测！
         <small>注册模块</small>
     </h1>
 </div>
@@ -89,12 +89,17 @@
             {{ rf.captcha }}
          </div>
         <br>
+        <a href="{% url 'xieyi' %}">用户协议</a>
+        <br>
      <div class="btn-group">
-              <button type="submit" class="btn btn-primary btn-block" onclick="return check()">注册</button>
+              <button type="submit" class="btn btn-primary btn-block" onclick="return check()">同意协议并且注册</button>
                <a href="{% url 'login' %}" type="button" class="btn btn-default btn-block">有账户了？去登录 </a>
         </div>
     </form>
-
+    <div class="weui-footer ">
+     <p class="weui-footer__text">Copyright © 2017 青协帮跑</p>
+    </div>
 </div>
+
 </body>
 </html>

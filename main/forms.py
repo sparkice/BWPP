@@ -45,8 +45,8 @@ class MailForm(forms.Form):
     whereup = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'mail_whereup',
-                'id': 'mail_whereup'
+                'class': 'weui-input',
+                'id': 'picker1'
             }
         )
     )
@@ -54,8 +54,8 @@ class MailForm(forms.Form):
     wheredown = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'mail_wheredown',
-                'id': 'mail_wheredown'
+                'class': 'weui-input',
+                'id': 'picker2'
             }
         )
     )
@@ -63,7 +63,7 @@ class MailForm(forms.Form):
     detail = forms.CharField(
         required=False, widget=forms.TextInput(
             attrs={
-                'class': 'mail_detail',
+                'class': 'weui-textarea',
                 'id': 'mail_detail',
                 'height': 20,
             }
@@ -80,4 +80,5 @@ class CheckForm(forms.Form):
     sms_check = forms.IntegerField(label='sms_check', widget=forms.TextInput(
         attrs={'id': 'sms_check', 'class': 'form-control', 'placeholder': '输入之前你收到的短信验证码'
                }))
+
     updatephoto = forms.ImageField(label='updatephoto', max_length=100)
