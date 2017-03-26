@@ -6,19 +6,15 @@
     <!--we_ui -->
     <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
     <style type="text/css">
         a:active{
             text-decoration: none;
         }
     </style>
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
     <title>发布</title>
 </head>
 <body>
@@ -30,25 +26,54 @@
         <small>发布</small>
     </h1>
 </div>
+
     <div class="weui-cells__title">关键信息填写</div>
 <div class="weui-cells weui-cells_form">
     <form method="post" role="form">
         {% csrf_token %}
         {{ qf.non_field_errors }}
         <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">取件地</label></div>
+            <div class="weui-cell__hd"><label class="weui-label">出发地</label></div>
              <div class="weui-cell__bd">
             {{ qf.whereup.errors }}
             {{ qf.whereup }}
-            <input type="text" class="weui-input" name="whereup"/>
+            <input type="text" class="weui-input" name="whereup" id='picker1'/>
+                 <script>
+                $("#picker1").picker({
+                  title: "请选择出发地",
+                  cols: [
+                    {
+                      textAlign: 'center',
+                      values: ['小四川圆通', '北门口', '爱心空间站', '随心驿站[优里]', '华贝数码', '小北门','其他   ']
+                    }
+                  ]
+                });
+                </script>
              </div>
+
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">取件地</label></div>
+            <div class="weui-cell__hd"><label class="weui-label">送达地</label></div>
               <div class="weui-cell__bd">
             {{ qf.wheredown.errors }}
             {{ qf.wheredown }}
-             <input type="text" class="weui-input" name="wheredown"/>
+             <input type="text" class="weui-input" name="wheredown" id='picker2'/>
+                  <script>
+                $("#picker2").picker({
+                  title: "请选择到达地",
+                  cols: [
+                    {
+                      values: ['慧园', '博园', '怡园', '东区', '南区']
+                    },
+                    {
+                      values: ['1', '2', '3']
+                    },
+                    {
+                      values: ['0栋','1栋', '2栋', '3栋', '4栋', '5栋','6栋','7栋','8栋','9栋']
+                    }
+                  ]
+                });
+                </script>
               </div>
         </div>
         <div class="weui-cells__title">更多信息</div>
@@ -63,6 +88,7 @@
         <button type="submit" class="weui-btn weui-btn_primary">提交</button>
     </form>
 </div>
+    </div>
  <div class="weui-tabbar">
     <a href="{% url 'index' %}" class="weui-tabbar__item">
     {% comment %}  <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>{% endcomment %}
@@ -77,7 +103,7 @@
       </div>
       <p class="weui-tabbar__label">发布</p>
     </a>
-    <a href="javascript:;" class="weui-tabbar__item">
+    <a href="{% url 'doing' %}" class="weui-tabbar__item">
       <div class="weui-tabbar__icon">
         <img src="http://onbwt5j59.bkt.clouddn.com/51%E5%BF%AB%E9%80%92%E5%91%98-%E7%BA%BF%E6%80%A7%20%281%29.png" alt="">
       </div>
@@ -91,9 +117,9 @@
       <p class="weui-tabbar__label">个人</p>
     </a>
   </div>
+<div class="weui-footer ">
+  <p class="weui-footer__text">Copyright © 2017 青协帮跑</p>
 </div>
 </body>
-<script
-<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+
 </html>

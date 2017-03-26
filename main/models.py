@@ -5,8 +5,7 @@ from django.db import models
 # Create your models here.
 # 代替系统默认的用户系统
 class NewUser(AbstractUser):
-    # profile = models.CharField('profile', default='', max_length=256)
-
+    profile = models.CharField('profile', default='', max_length=256)
     def __str__(self):
         return self.username
 

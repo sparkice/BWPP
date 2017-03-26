@@ -13,23 +13,27 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.views import login, logout
+
 from main import views as main_views
-from django.contrib.auth.views import login,logout
+
 urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^captcha/', include('captcha.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$',  main_views.index,  name='index'),
-    url(r'^mail/(?P<mail_id>[0-9]+)$', main_views.mailpage,  name='mail_page'),
-    url(r'^new/$',main_views.Mail,name='new_mail'),
-    url(r'^login/$',login,{'template_name':  'login.html'},  name='login'),
-    url(r'^register/$',main_views.register,name='register'),
-    url(r'^logout/$', logout,{'next_page': '/login'},  name='logout'),
-    url(r'^user/$',main_views.user, name='user'),
-    url(r'^take/(?P<mail_id>[0-9]+)$',main_views.take, name='take'),
-    url(r'^get/(?P<mail_id>[0-9]+)$',main_views.get, name='get'),
-    url(r'^quxiao/(?P<mail_id>[0-9]+)$',main_views.quxiao, name='quxiao'),
-    url(r'^check/',main_views.check,name='check')
+    url(r'^$', main_views.index, name='index'),
+    url(r'^mail/(?P<mail_id>[0-9]+)$', main_views.mailpage, name='mail_page'),
+    url(r'^new/$', main_views.Mail, name='new_mail'),
+    url(r'^login/$', login, {'template_name': 'login.html'}, name='login'),
+    url(r'^register/$', main_views.register, name='register'),
+    url(r'^logout/$', logout, {'next_page': '/login'}, name='logout'),
+    url(r'^user/$', main_views.user, name='user'),
+    url(r'^take/(?P<mail_id>[0-9]+)$', main_views.take, name='take'),
+    url(r'^get/(?P<mail_id>[0-9]+)$', main_views.get, name='get'),
+    url(r'^quxiao/(?P<mail_id>[0-9]+)$', main_views.quxiao, name='quxiao'),
+    url(r'^check/', main_views.check, name='check'),
+    url(r'^doing/$', main_views.doing, name='doing'),
+    url(r'^xieyi/$',main_views.xieyi,name='xieyi')
 ]
