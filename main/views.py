@@ -8,7 +8,7 @@ from . import models
 from .check import send_sms, createPhoneCode
 from .forms import MailForm, CaptchaTestForm, CheckForm
 
-key = "7720028ac388fe8b413e2cd91a532307"  # 云片网个人秘钥
+key = "7********07"  # 云片网个人秘钥
 text = "【航宇青协】您的”帮我跑跑“平台验证码是"  # 云片网模板语言
 
 
