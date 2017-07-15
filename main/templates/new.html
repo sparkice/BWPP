@@ -27,9 +27,9 @@
     </h1>
 </div>
 
-    <div class="weui-cells__title">关键信息填写</div>
-<div class="weui-cells weui-cells_form">
     <form method="post" role="form">
+        <div class="weui-cells__title">关键信息填写</div>
+<div class="weui-cells weui-cells_form">
         {% csrf_token %}
         {{ qf.non_field_errors }}
         <div class="weui-cell">
@@ -76,19 +76,13 @@
                 </script>
               </div>
         </div>
-        <div class="weui-cells__title">更多信息</div>
-          <div class="weui-cell">
             {{ qf.detail.error }}
             {{ qf.detail }}
-
-            <div class="weui-cell__bd">
-             <textarea rows="5" id="d" class="weui-textarea" placeholder="当所在快递含特殊信息时填写,建议直接复制粘贴短信内容"></textarea>
-            </div>
-          </div>
+             <input type="text" id="d" class="weui-textarea" name="detail"/>
         <button type="submit" class="weui-btn weui-btn_primary">提交</button>
-    </form>
 </div>
-    </div>
+    </form>
+
  <div class="weui-tabbar">
     <a href="{% url 'index' %}" class="weui-tabbar__item">
     {% comment %}  <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>{% endcomment %}
@@ -117,9 +111,7 @@
       <p class="weui-tabbar__label">个人</p>
     </a>
   </div>
-<div class="weui-footer ">
-  <p class="weui-footer__text">Copyright © 2017 青协帮跑</p>
-</div>
+
 </body>
 
 </html>

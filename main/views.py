@@ -115,6 +115,7 @@ def Mail(request):
             whereup = qf.cleaned_data['whereup']
             wheredown = qf.cleaned_data['wheredown']
             detail = qf.cleaned_data['detail']
+            print(detail+"<---")
             models.Mail.objects.create(WhereUP=whereup, WhereDown=wheredown, Host_user=user, Detail=detail)
             u = models.UserProfile.objects.get(user=user)
             u.please_num += 1

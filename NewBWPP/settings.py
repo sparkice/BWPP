@@ -24,7 +24,9 @@ SECRET_KEY = '^k+ij%-tdz#5#xwp@w&(s!ljf@fv58oa9mrn#&9*^nox(6%!(w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['123.206.231.168','127.0.0.1','nuaainfo.com','bwpp.nuaainfo.com']
+ALLOWED_HOSTS = [
+    '123.206.231.168', '127.0.0.1', 'nuaainfo.com', 'bwpp.nuaainfo.com'
+]
 
 # Application definition
 
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -86,16 +88,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -120,14 +126,13 @@ USE_TZ = True
 
 DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuStorage'
 QINIU_ACCESS_KEY = 'FJcHkMNZLlYlbKFE0PwpF8IGo1kGPnh2kRwqLkdN'
-QINIU_SECRET_KEY	= '22Yt8MWlbnWrE7EzeM1j5C5BpsiwLk78rOmQS-Rp'
-QINIU_BUCKET_NAME	= 'bwpp'
-QINIU_BUCKET_DOMAIN = 'on3w0ajxj.bkt.clouddn.com'
+QINIU_SECRET_KEY = '22Yt8MWlbnWrE7EzeM1j5C5BpsiwLk78rOmQS-Rp'
+QINIU_BUCKET_NAME = 'bwpp'
+QINIU_BUCKET_DOMAIN = 'osvg8uk9j.bkt.clouddn.com'
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-
 
 LOGIN_URL = '/login/'
 

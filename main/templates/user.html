@@ -25,8 +25,8 @@
     </h1>
 </div>
 <div class="container">
-<a href="{% url 'logout' %}" class="weui-btn weui-btn_plain-default">退出</a>
-<br>
+    <a href="{% url 'logout' %}" class="weui-btn weui-btn_plain-default">退出</a>
+    <br>
         <div  id="more_info">
             <ul class="list-group">
                 <li class="list-group-item">登录名:{{ user.userprofile.username }}</li>
@@ -63,15 +63,16 @@
                         </a>
                     {% endif %}
                 {% endfor %}
-
-            </div>
+        </div>
 
 </div>
+
 <div class="weui-footer ">
     <a href="{% url 'xieyi' %}"  class="weui-footer__link">反馈与协议</a>
   <p class="weui-footer__text">Copyright © 2017 青协帮跑</p>
 </div>
-   <div class="weui-tabbar">
+
+<div class="weui-tabbar">
     <a href="{% url 'index' %}" class="weui-tabbar__item">
     {% comment %}  <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>{% endcomment %}
       <div class="weui-tabbar__icon">
@@ -101,7 +102,5 @@
     </a>
   </div>
 
-
-</div>
 </body>
 </html>

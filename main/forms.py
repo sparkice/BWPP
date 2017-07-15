@@ -59,7 +59,6 @@ class MailForm(forms.Form):
             }
         )
     )
-
     detail = forms.CharField(
         required=False, widget=forms.TextInput(
             attrs={
